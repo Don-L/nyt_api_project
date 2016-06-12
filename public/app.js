@@ -6,24 +6,30 @@ window.onload = function() {
   // var urlClinton = "https://api.nytimes.com/svc/search/v2/articlesearch.json?&apikey=8940f70a78ca497f9f44e177685c1fdb&q=clinton,+hillary+rodham&begin_date=20160501&end_date=20160601";
   // var requestClinton = new XMLHttpRequest();
 
-  //FOR EACH URL, MAKE A REQUEST. STICK THE RESULT OF EACH REQUEST IN AN ARRAY
+  var button = document.getElementById('button');
 
-  var trumpUrls = urlMaker("trump,+donald+j");
-  var clintonUrls = urlMaker("Clinton,+Hillary+Rodham");
+  var monthAndYear = [];
+
+  button.onclick = handleClick;
+
+
+
+  // var trumpUrls = urlMaker("trump,+donald+j");
+  // var clintonUrls = urlMaker("Clinton,+Hillary+Rodham");
 
   var trumpNumbers = [];
   var clintonNumbers = [];
 
-  for (url of trumpUrls) {
-    var requestTrump = new XMLHttpRequest();
-    requestTrump.open("GET", url);
-    requestTrump.send(null);
-    requestTrump.onload = function() {
-      if (requestTrump.status === 200) {
-        console.log('got the trump data');
-        var jsonString = requestTrump.responseText;
-        returnedObj = JSON.parse(jsonString);
-        console.log(returnedObj);
+  // for (url of trumpUrls) {
+  //   var requestTrump = new XMLHttpRequest();
+  //   requestTrump.open("GET", url);
+  //   requestTrump.send(null);
+  //   requestTrump.onload = function() {
+  //     if (requestTrump.status === 200) {
+  //       console.log('got the trump data');
+  //       var jsonString = requestTrump.responseText;
+  //       returnedObj = JSON.parse(jsonString);
+  //       console.log(returnedObj);
         // var trumpDocs = returnedObj.response.docs;
         // var trumpHits = returnedObj.response.meta.hits;
         // console.log('trump hits ' + trumpHits);
@@ -32,7 +38,7 @@ window.onload = function() {
         // console.log('dates ' + dates[0]);
         // console.log(articles).typeOf;
         // trump(trumpDocs);
-      }
+      // }
   }
 
   // for (url of clintonUrls) {
@@ -63,7 +69,7 @@ window.onload = function() {
       // console.log(articles).typeOf;
       // trump(trumpDocs);
     // }
-  }
+  // }
 
   // requestClinton.onload = function() {
     // if (requestClinton.status === 200) {
@@ -79,8 +85,15 @@ window.onload = function() {
     // };
   // };
 // };
+// }
+var handleClick = function(event) {
+    event.preventDefault();
+    console.log('Woah, I got clicked!');
+    var monthSelect = document.getElementById('month');
+    var yearSelect = document.getElementById('year');
+    monthAndYear = [yearSelect, monthSelect];
+    requestData();
 }
-
 
 // var trump = function(docs) {
 //   displayHeadlines(docs, 'trump');
@@ -115,24 +128,22 @@ var monthEnd  = [
     ['12', '31'],
 ];
 
-var dateRangeMaker = function(month, year) {
-  var beginAndEndDates = [];
-  for (pair of monthEnd) {
-    if (pair[0] === month) {
-      beginAndEndDates.push([year + month + '01', year + month + pair[1]])
-    }
-  };
-  return beginAndEndDates;
-};
+// var dateRangeMaker = function(month, year) {
+//   var beginAndEndDates = [];
+//   for (pair of monthEnd) {
+//     if (pair[0] === month) {
+//       beginAndEndDates.push([year, month ,'01']);
+//       beginAndEndDates.push([year + month + pair[1]]);
+//     }
+//   };
+//   return beginAndEndDates;
+// };
 
-var urlMaker = function(queryString, month, year) {
-  var datePairs = dateRangeMaker(month, year);
-  var urls = [];
-  for (pairs of datePairs) {
-    urls.push("https://api.nytimes.com/svc/search/v2/articlesearch.json?&apikey=8940f70a78ca497f9f44e177685c1fdb&q=" + queryString + "&begin_date=" + pairs[0] + "&end_date=" + pairs[1]);
-  };
-  return urls;
-};
+// var urlMaker = function(queryString, month, year) {
+//   var datePairs = dateRangeMaker(month, year);
+//   var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?&apikey=8940f70a78ca497f9f44e177685c1fdb&q=" + queryString + "&begin_date=" + datePairs[0][0] + datePairs[0][1] + datePairs[0][2] + "&end_date=" + datePairs[1][0] + datePairs[1][1] + datePairs[1][2];
+//   return url;
+// };
 
 
 
